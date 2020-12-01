@@ -1,3 +1,31 @@
 li {
   border: solid 2px black;
 }
+h1 {
+  border: solid 2px black;
+  border-radius: 5px;
+  font-family: 'Orbitron', sans-serif;
+  /* font-family: Monaco, monospace; */
+  background-color: lightblue;
+}
+.headButtons {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  margin: 0px; */
+  border: solid 2px black;
+  border-radius: 3px;
+  font-family: 'Orbitron', sans-serif;
+  /* font-family: Monaco, monospace; */
+  background-color: lightblue;
+  /* margin: auto;
+  width: 50%; */
+  line-height: 18px;
+  height: 25px;
+  
+  text-align: center;
+  
+
+
+}

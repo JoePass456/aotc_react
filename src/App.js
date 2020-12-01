@@ -1,15 +1,51 @@
-import logo from './logo.svg';
+import Landing from './components/Landing'
+import Posts from './components/Posts';
+
+
+import Register from './components/Register';
+import Login from './components/Login';
+import Logout from './components/Logout';
 import './App.css';
-import Posts from './Posts.js';
-import Header from './Header.js';
+// import { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import { AppProvider } from './utilities/AppContext';
+// import { axiosHelper } from './utilities/axiosHelper';
 
 
 function App() {
+
+
+  // console.log(name, email, password);
+
+
   return (
-    <div>
-      <Header heading="Qwitter" subHeading="Confess your excesses anonymously"/>
-      <Posts/>
-    </div>
+    <>
+      
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Landing />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/logout">
+            <Logout />
+          </Route>
+          <Route path="/posts">
+            <div>
+              <Posts />
+            </div>
+
+          </Route>
+        </Switch>
+        
+
+      </Router>
+    </>
   );
 }
 
