@@ -1,8 +1,10 @@
 import Header from '../components/Header';
 import React, { useState } from 'react'
 // import AppContext from '../utilities/AppContext';
-import { Button } from 'reactstrap';
+import { Button, Row, Col, Container } from 'reactstrap';
 import { axiosHelper } from '../utilities/axiosHelper';
+import { Redirect, Link } from 'react-router-dom';
+
 
 function Register() {
 
@@ -10,6 +12,7 @@ function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [token, setToken] = useState('');
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -21,7 +24,11 @@ function Register() {
         setEmail(e.target.value);
     };
 
-
+    const loginInfo = {
+        name: name,
+        email: email,
+        password: password
+    }
 
     const signUp = (res) => {
 
@@ -29,33 +36,61 @@ function Register() {
 
         if (res !== {}) {
 
-            console.log(res);
+            // console.log(res);
 
             localStorage.setItem("token", res.data.token);
-            // localStorage.setItem("name", name);
-            // localStorage.setItem("email", email);
+            setToken(res.data.token);
 
         } else {
             console.log('Error, no data returned!');
         }
     }
-    const loginInfo = {
-        name: name,
-        email: email,
-        password: password
-    }
+
 
 
     return (
         <>
             <Header heading="QWITTER" />
-            <div>Input Name: </div>
-            <input value={name} onChange={onNameChange} />
-            <div>Input Password: </div>
-            <input type="password" value={password} onChange={onPasswordChange} />
-            <div>Input Email: </div>
-            <input type="email" value={email} onChange={onEmailChange} />
-            <Button onClick={() => axiosHelper('post', '/register', loginInfo, {}, signUp)}>SignUp</Button>
+            { token ? <Redirect to="/" /> : null}
+
+            { localStorage.getItem("token") ?
+                <Container>
+
+                    <Row >
+                        <Col className="text-center">
+                            <h5>You may already be logged in</h5>
+                            <Link to="/logout">Log out</Link><br></br>
+                            <Link to="/">See who is logged in</Link><br></br>
+                        </Col>
+                    </Row>
+                </Container>
+                :
+                <Container>
+                    <Row >
+                        <Col className="text-center">
+                            <div>Input Name: </div>
+                            <input type="email" value={name} onChange={onNameChange} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="text-center">
+                            <div>Input Password: </div>
+                            <input type="password" value={password} onChange={onPasswordChange} /><br></br>
+                        </Col>
+                    </Row>
+                    <Row >
+                        <Col className="text-center">
+                            <div>Input Email: </div>
+                            <input type="email" value={email} onChange={onEmailChange} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="text-center">
+                            <Button className="m-2" onClick={() => axiosHelper('post', '/register', loginInfo, {}, signUp)}>SignUp</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            }
         </>
     )
 }

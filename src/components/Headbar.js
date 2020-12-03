@@ -1,26 +1,30 @@
 import React from 'react'
-import { Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 import '../App.css';
+import Header from './Header';
+import { Link } from 'react-router-dom';
 
 
-function Headbar() {
+function Headbar(props) {
     return (
-        
-        <Row className="navbar fixed-top">
-
-                    <Col xs="4"className="headButtons">
-                        <p className="">Newist</p>
-                    </Col>
-                    <Col xs="4"className="headButtons">
-                        <p className="">Hottest</p>
-                    </Col>
-                    <Col xs="4"className="headButtons">
-                        <p className="">Search</p>
-                    </Col>
-                
-        </Row>
-            
-        
+        <Container className="fixed-top text-center">
+            <Row>
+                <Col>
+                    <Header heading="QWITTER" />
+                </Col>
+            </Row>
+            <Row>
+                <Col onClick={() => props.changePostsOrder('newist')} xs="4" className="headButtons">
+                    <p className="">Newest</p>
+                </Col>
+                <Col onClick={() => props.changePostsOrder('oldest')} xs="4" className="headButtons">
+                    <p className="">Oldest</p>
+                </Col>
+                <Col onClick={() => props.changePostsOrder('hottest')} xs="4" className="headButtons">
+                    <p className="">Hottest</p>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

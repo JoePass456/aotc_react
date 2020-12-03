@@ -1,4 +1,7 @@
-import React from 'react'
+import React from 'react';
+import Header from '../components/Header';
+import { Col, Row, Container } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function Logout() {
 
@@ -10,7 +13,16 @@ function Logout() {
 
     return (
         <div>
-            <h3>You are now logged out</h3>
+            <Header heading="A1 Jokes" />
+            <Row>
+                <Col className="text-center">
+                    <h4>You are now logged out</h4>
+                    <Link to="/login">Log in</Link><br></br>
+                    <Link to="/register">Create new account</Link><br></br>
+                    <Link to="/posts">Go to site without logging in</Link><br></br>
+                    <p>(Create an account to post, like, and more!)</p>
+                </Col>
+            </Row>
         </div>
     )
 }

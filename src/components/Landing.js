@@ -5,9 +5,10 @@ import { axiosHelper } from '../utilities/axiosHelper';
 import { useState } from 'react';
 import { Col, Row } from 'reactstrap';
 import '../App.css';
+// import AppContext from '../utilities/AppContext';
 
 function Landing() {
-
+    // const context = useContext(AppContext);
     // const [msg, setMsg] = useState("You are not logged in");
     const [ loggedIn, setLoggedIn] = useState(false);
     // let loggedIn = false;
@@ -15,7 +16,8 @@ function Landing() {
     const [ name, setName ] = useState("Loading");
 
 
-    let token = localStorage.getItem("token");
+
+    let token = (localStorage.getItem("token"));
     // token? setLoggedIn(true) : setLoggedIn(false);
     // let name = localStorage.getItem("name");
 
@@ -58,13 +60,13 @@ function Landing() {
 
                     {loggedIn ?
                         <>
-                            <h3>Welcome back {name}!</h3>
+                            <h4>Welcome back {name}!</h4>
                             <Link to="/logout">That's not me</Link><br></br>
                             <Link to="/posts">Go to site</Link>
                             </>
                         :
                         <>
-                            <h3>You are not logged in</h3>
+                            <h4>You are not logged in</h4>
                             <Link to="/login">Log in now</Link><br></br>
                             <Link to="/register">Create new account</Link><br></br>
                             <Link to="/posts">Go to site without logging in</Link><br></br>

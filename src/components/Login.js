@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import Header from '../components/Header';
+import React, { useContext, useState } from 'react';
+import { Button, Container, Row, Col } from 'reactstrap';
 import { axiosHelper } from '../utilities/axiosHelper';
+import { Link, Redirect } from 'react-router-dom';
+import AppContext from '../utilities/AppContext';
+// import Landing from '../components/Landing';
 
 function Login() {
+    const context = useContext(AppContext);
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [token, setToken] = useState('');
 
     const onPasswordChange = (e) => {
         setPassword(e.target.value);
@@ -19,7 +25,7 @@ function Login() {
         let logInInfo = {
             grant_type: "password",
             client_id: 2,
-            client_secret: "UO9tke5M8T7A3xjJD5VXQgOXpDJ7kVTMSIVtcD1x",
+            client_secret: context.secret,
             password: password,
             username: email,
             scope: ""
@@ -34,25 +40,45 @@ function Login() {
 
         if (res !== {}) {
 
-            console.log(res.access_token);
-
             localStorage.setItem("token", res.access_token);
-            // localStorage.setItem("name", name);
-            // localStorage.setItem("email", email);
-
+            setToken(res.access_token);
+            
         } else {
+
             console.log('Error, no data returned!');
+
         }
     }
 
     return (
-        <div>
-            <div>Input Password: </div>
-            <input type="password" value={password} onChange={onPasswordChange} />
-            <div>Input Email: </div>
-            <input type="email" value={email} onChange={onEmailChange} />
-            <Button onClick={callLogIn}>Login</Button>
-        </div>
+        <Container>
+            {token? <Redirect to="/"/> : null}
+            <Header heading="TWIT" />
+            <Row >
+                <Col className="text-center">
+                    <div>Input Email: </div>
+                    <input type="email" value={email} onChange={onEmailChange} />
+                </Col>
+            </Row>
+            <Row>
+                <Col className="text-center">
+                    <div>Input Password: </div>
+                    <input type="password" value={password} onChange={onPasswordChange} /><br></br>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="text-center">
+                    <Button className="m-2" onClick={callLogIn}>Login</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="text-center">
+                    <Link to="/register">Create new account</Link><br></br>
+                    <Link to="/posts">Go to site without logging in</Link><br></br>
+                    <p>(Create an account to post, like, and more!)</p>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 
