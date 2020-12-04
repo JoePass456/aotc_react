@@ -8,7 +8,7 @@ function Footer() {
     return (
         <Row className="navbar fixed-bottom">
             <Col xs="4" className="headButtons">
-                <p className="">Profile</p>
+                <Link to="/profile" className="">Profile</Link>
             </Col>
             <Col xs="4" className="headButtons">
                 <p className="">Options</p>

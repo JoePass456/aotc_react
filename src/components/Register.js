@@ -1,18 +1,19 @@
-import Header from '../components/Header';
-import React, { useState } from 'react'
-// import AppContext from '../utilities/AppContext';
+import React, { useState, useContext } from 'react';
 import { Button, Row, Col, Container } from 'reactstrap';
-import { axiosHelper } from '../utilities/axiosHelper';
 import { Redirect, Link } from 'react-router-dom';
+import { axiosHelper } from '../utilities/axiosHelper';
+import AppContext from '../utilities/AppContext';
+import Spacer from '../components/Spacer';
+import Header from '../components/Header';
 
 
 function Register() {
-
+    const context = useContext(AppContext);
     // const [regRes, setRegRes] = useState({});
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken] = useState('');
+    
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -33,13 +34,13 @@ function Register() {
     const signUp = (res) => {
 
         // setRegRes(res);
-
-        if (res !== {}) {
+        console.log(res);
+        if (res.status) {
 
             // console.log(res);
 
             localStorage.setItem("token", res.data.token);
-            setToken(res.data.token);
+            context.setToken(res.data.token);
 
         } else {
             console.log('Error, no data returned!');
@@ -49,12 +50,12 @@ function Register() {
 
 
     return (
-        <>
-            <Header heading="QWITTER" />
-            { token ? <Redirect to="/" /> : null}
+        <Container className="postsbg">
+            <Header/>
+            { context.token ? <Redirect to="/" /> : null}
 
             { localStorage.getItem("token") ?
-                <Container>
+                <>
 
                     <Row >
                         <Col className="text-center">
@@ -63,9 +64,10 @@ function Register() {
                             <Link to="/">See who is logged in</Link><br></br>
                         </Col>
                     </Row>
-                </Container>
+                    <Spacer spaces="15"/>
+                </>
                 :
-                <Container>
+                <>
                     <Row >
                         <Col className="text-center">
                             <div>Input Name: </div>
@@ -87,11 +89,14 @@ function Register() {
                     <Row>
                         <Col className="text-center">
                             <Button className="m-2" onClick={() => axiosHelper('post', '/register', loginInfo, {}, signUp)}>SignUp</Button>
+                            <br></br>
+                            <Link to="/">Go back</Link>
                         </Col>
                     </Row>
-                </Container>
+                    <Spacer spaces="12"/>
+                </>
             }
-        </>
+        </Container>
     )
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Container } from 'reactstrap';
 import '../App.css';
 
-function Header(props) {
+function Header() {
 
     return (
         <>

@@ -14,7 +14,7 @@ function Headbar(props) {
                 </Col>
             </Row>
             <Row>
-                <Col onClick={() => props.changePostsOrder('newist')} xs="4" className="headButtons">
+                <Col onClick={() => props.changePostsOrder('newest')} xs="4" className="headButtons">
                     <p className="">Newest</p>
                 </Col>
                 <Col onClick={() => props.changePostsOrder('oldest')} xs="4" className="headButtons">

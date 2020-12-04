@@ -9,6 +9,14 @@ h1 {
   background-color: rgba(155, 181, 237, 0.954);
 }
 
+.name {
+  border: solid 2px black;
+  /* border-radius: 5px; */
+  font-family: 'Orbitron', sans-serif;
+  background-color: rgba(155, 181, 237, 0.954);
+  margin: 20px;
+}
+
 .headButtons {
   border: solid 2px black;
   /* border-radius: 3px; */
@@ -42,7 +50,7 @@ h1 {
 
 .postsbg {
   background: #ECF0F5;
-background: -webkit-linear-gradient(top, #ECF0F5, #88878F);
-background: -moz-linear-gradient(top, #ECF0F5, #88878F);
-background: linear-gradient(to bottom, #ECF0F5, #88878F);
+  background: -webkit-linear-gradient(top, #ECF0F5, #88878F);
+  background: -moz-linear-gradient(top, #ECF0F5, #88878F);
+  background: linear-gradient(to bottom, #ECF0F5, #88878F);
 }

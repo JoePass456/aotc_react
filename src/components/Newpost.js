@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AppContext from '../utilities/AppContext';
 import { Button, Container, Row, Col } from 'reactstrap';
 import { axiosHelper } from '../utilities/axiosHelper';
@@ -9,7 +9,7 @@ import Spacer from '../components/Spacer';
 
 function Newpost() {
     const [posted, setPosted] = useState(false);
-    // const context = useContext(AppContext);
+    const context = useContext(AppContext);
 
     // let name = localStorage.getItem("name");
     let id = parseInt(localStorage.getItem("id"));
@@ -65,7 +65,7 @@ function Newpost() {
 
     return (
         <Container className="postsbg">
-            {!token ? <Redirect to="/" /> : null}
+            {!context.token ? <Redirect to="/" /> : null}
             <Header heading="TWIT" />
             <Row >
                 <Col className="text-center">

@@ -1,23 +1,23 @@
-import React from 'react';
-import Header from '../components/Header';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosHelper } from '../utilities/axiosHelper';
-import { useState } from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Container } from 'reactstrap';
 import '../App.css';
-// import AppContext from '../utilities/AppContext';
+import { axiosHelper } from '../utilities/axiosHelper';
+import AppContext from '../utilities/AppContext';
+import Header from '../components/Header';
+import Spacer from '../components/Spacer';
 
 function Landing() {
-    // const context = useContext(AppContext);
+    const context = useContext(AppContext);
+
     // const [msg, setMsg] = useState("You are not logged in");
-    const [ loggedIn, setLoggedIn] = useState(false);
+    
     // let loggedIn = false;
     // let res = {};
-    const [ name, setName ] = useState("Loading");
+    const [name, setName] = useState("Loading");
 
 
 
-    let token = (localStorage.getItem("token"));
     // token? setLoggedIn(true) : setLoggedIn(false);
     // let name = localStorage.getItem("name");
 
@@ -26,44 +26,49 @@ function Landing() {
         localStorage.setItem("name", res.name);
         localStorage.setItem("id", res.id);
         localStorage.setItem("email", res.email);
+        localStorage.setItem("bio", res.bio);
+
 
         // setMsg(`Welcome ${res.name}!`);
-        setLoggedIn(true);
         // name = res.name;
         // loggedIn = true;
         setName(res.name)
 
     };
-
-    if (token) {
-
-        console.log('Axiox Call');
+    useEffect(() => {
+        // console.log(context.token);
+        // let lsName = localStorage.getItem("name");
 
         let headers = {
             Accept: "application/json",
-            Authorization: "Bearer " + token
+            Authorization: "Bearer " + context.token
         };
 
-        axiosHelper('get', '/api/user', {}, headers, getUser);
+        if (context.token.length > 0) {
 
-    }
+            axiosHelper('get', '/api/user', {}, headers, getUser);
+
+            context.setLoggedIn(true);
+        }
+
+    }, [context.token])
 
     console.log('Render');
 
 
 
     return (
-        <>
-            <Header heading="QWITTER" />
+        <Container className="postsbg">
+            <Header/>
             <Row>
                 <Col className="text-center">
 
-                    {loggedIn ?
+                    {context.loggedIn ?
                         <>
-                            <h4>Welcome back {name}!</h4>
+                            <h4>Welcome, {name}!</h4>
                             <Link to="/logout">That's not me</Link><br></br>
                             <Link to="/posts">Go to site</Link>
-                            </>
+                        </>
                         :
                         <>
                             <h4>You are not logged in</h4>
@@ -76,7 +81,8 @@ function Landing() {
 
                 </Col>
             </Row>
-        </>
+            <Spacer spaces="18" />
+        </Container>
     )
 }
 

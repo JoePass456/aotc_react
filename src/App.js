@@ -1,34 +1,42 @@
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AppProvider } from './utilities/AppContext';
 import Landing from './components/Landing';
 import Posts from './components/Posts';
 import Newpost from './components/Newpost';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
-import './App.css';
-// import { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AppProvider } from './utilities/AppContext';
-// import { axiosHelper } from './utilities/axiosHelper';
+import Profile from './components/Profile';
+import Viewpost from './components/Viewpost';
 
 
 function App() {
-  // const [name, setName] = useState("");
-  // const [id, setId] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [token, setToken] = useState("");
 
-  // console.log(name, email, password);
+  const [token, setToken] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [rawPosts, setRawPosts] = useState(null);
+
+  useEffect(() => {
+
+    let lsToken = localStorage.getItem("token");
+
+    if (lsToken) {
+      setToken(lsToken);
+
+    }
+
+  }, [])
+
   const context = {
-    appName: "Quoter", 
     secret: "79O8m2z2hQ7Di0K2JTQzeBZ265jnPtJHo5sPE0n5",
-    // name: name,
-    // setName: setName,
-    // id: id,
-    // setId: setId,
-    // email: email,
-    // setEmail: setEmail,
-    // token: token,
-    // setToken: setToken
+    loggedIn,
+    setLoggedIn,
+    token,
+    setToken,
+    rawPosts, 
+    setRawPosts
   };
 
   return (
@@ -54,6 +62,12 @@ function App() {
             </Route>
             <Route path="/newpost">
               <Newpost />
+            </Route>
+            <Route path="/viewpost">
+              <Viewpost />
+            </Route>
+            <Route path="/profile">
+              <Profile />
             </Route>
           </Switch>
 

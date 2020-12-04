@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Spacer from '../components/Spacer';
 import React, { useContext, useState } from 'react';
 import { Button, Container, Row, Col } from 'reactstrap';
 import { axiosHelper } from '../utilities/axiosHelper';
@@ -11,7 +12,7 @@ function Login() {
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [token, setToken] = useState('');
+    
 
     const onPasswordChange = (e) => {
         setPassword(e.target.value);
@@ -38,10 +39,10 @@ function Login() {
 
     const getLogIn = (res) => {
 
-        if (res !== {}) {
+        if (res.status) {
 
             localStorage.setItem("token", res.access_token);
-            setToken(res.access_token);
+            context.setToken(res.access_token);
             
         } else {
 
@@ -51,8 +52,8 @@ function Login() {
     }
 
     return (
-        <Container>
-            {token? <Redirect to="/"/> : null}
+        <Container className="postsbg">
+            {context.token? <Redirect to="/"/> : null}
             <Header heading="TWIT" />
             <Row >
                 <Col className="text-center">
@@ -78,6 +79,7 @@ function Login() {
                     <p>(Create an account to post, like, and more!)</p>
                 </Col>
             </Row>
+            <Spacer spaces="15"/>
         </Container>
     )
 }
