@@ -36,10 +36,11 @@ function Login() {
 
     }
 
-
     const getLogIn = (res) => {
 
-        if (res.status) {
+        console.log(res);
+
+        if (res.token_type == "Bearer") {
 
             localStorage.setItem("token", res.access_token);
             context.setToken(res.access_token);
@@ -54,7 +55,7 @@ function Login() {
     return (
         <Container className="postsbg">
             {context.token? <Redirect to="/"/> : null}
-            <Header heading="TWIT" />
+            <Header/>
             <Row >
                 <Col className="text-center">
                     <div>Input Email: </div>

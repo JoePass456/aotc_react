@@ -32,12 +32,9 @@ function Register() {
     }
 
     const signUp = (res) => {
-
-        // setRegRes(res);
+        
         console.log(res);
         if (res.status) {
-
-            // console.log(res);
 
             localStorage.setItem("token", res.data.token);
             context.setToken(res.data.token);

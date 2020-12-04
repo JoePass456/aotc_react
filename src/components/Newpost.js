@@ -66,7 +66,7 @@ function Newpost() {
     return (
         <Container className="postsbg">
             {!context.token ? <Redirect to="/" /> : null}
-            <Header heading="TWIT" />
+            <Header />
             <Row >
                 <Col className="text-center">
                     <div>Input Quote: </div>

@@ -1,11 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-export function funcHelper() {
-    return (
-        <div>
-            
-        </div>
-    )
+
+
+
+function newestFirst(array) {
+    function compare(a, b) {
+        if (a.id < b.id) {
+            return -1;
+        }
+        if (a.id > b.id) {
+            return 1;
+        }
+        return 0;
+    }
+    // console.log(array[0]);
+    return array.sort(compare);
 }
-
 
