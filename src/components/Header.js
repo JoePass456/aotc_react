@@ -8,7 +8,7 @@ function Header() {
         <>
             <Container className="">
                 <Row >
-                    <Col xs="12" className="text-center">
+                    <Col xs="12" className="text-center pt-1">
                         <h1>"QUOTER"</h1>
                         <h4></h4>
                     </Col>

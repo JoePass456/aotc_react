@@ -11,13 +11,23 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
 import Viewpost from './components/Viewpost';
+import Editbio from './components/Editbio';
+
 
 
 function App() {
 
   const [token, setToken] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);  
+  const [loggedIn, setLoggedIn] = useState(false);
   const [response, setResponse] = useState({});
+  const [name, setName] = useState("Loading");
+  const [bio, setBio] = useState("Mysterious stranger");
+  const [email, setEmail] = useState("");
+  const [id, setId] = useState(0);
+
+  let myNumberOfPosts = 0;
+  let myNumberOfLikes = 0;
+  let myNumberOfComments = 0;
 
   useEffect(() => {
 
@@ -32,140 +42,124 @@ function App() {
   function newestFirst(array) {
 
     function compare(a, b) {
-        if (a.id < b.id) {
-            return -1;
-        }
-        if (a.id > b.id) {
-            return 1;
-        }
-        return 0;
-    } 
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    }
 
     return array.sort(compare);
 
-};
+  };
 
-function reverseOrder(array) {
+  function reverseOrder(array) {
 
-  function compare(a, b) {
+    function compare(a, b) {
       if (a.id > b.id) {
-          return -1;
+        return -1;
       }
       if (a.id < b.id) {
-          return 1;
+        return 1;
       }
       return 0;
+    }
+
+    return array.sort(compare);
+
   }
-  
-  return array.sort(compare);
 
-}
+  function hottestOrder(array) {
 
-function hottestOrder(array) {
-
-  function compare(a, b) {
+    function compare(a, b) {
       if (a.likes.length < b.likes.length) {
-          return -1;
+        return -1;
       }
       if (a.likes.length > b.likes.length) {
-          return 1;
+        return 1;
       }
       return 0;
-  }
+    }
 
-  return array.sort(compare);
-  
-};
+    return array.sort(compare);
 
-function pluralOrNot(num, string) {
+  };
 
-  if (num !== 1) {
+  function pluralOrNot(num, string) {
+
+    if (num !== 1) {
       string += "s";
-  }
-  return string;
-  
-};
+    }
+    return string;
 
-const toggleLike = (post) => {       
+  };
 
-  if (token) {
+  const toggleLike = (post) => {
+
+    if (context.token) {
       let usersThatLike = [];
-      let id = parseInt(localStorage.getItem("id"));
-
-      for (let i = 0; i < post.likes.length; i++) {                
-          usersThatLike.push(post.likes[i].user_id);
-      }
       
-      if (usersThatLike.includes(id)) {
-          console.log("sub like");
-          
-          let likeId = parseInt(post.likes[usersThatLike.indexOf(id)].id);
+      console.log(context.id);
 
-          let headers = {
-              Accept: "application/json",
-              Authorization: "Bearer " + token
-          };
+      for (let i = 0; i < post.likes.length; i++) {
+        usersThatLike.push(post.likes[i].user_id);
+      }
 
-          let data = {
-              id: likeId                  
-          }
-          
-          axiosHelper('post', '/like/del', data, headers, getRes); 
+      if (usersThatLike.includes(context.id)) {
+        console.log("sub like");
+
+        let likeId = parseInt(post.likes[usersThatLike.indexOf(context.id)].id);
+
+        let headers = {
+          Accept: "application/json",
+          Authorization: "Bearer " + context.token
+        };
+
+        let data = {
+          id: likeId
+        }
+
+        axiosHelper('post', '/like/del', data, headers, setResponse);
 
       } else {
-          console.log("add like");
+        console.log("add like");
 
-          let headers = {
-              Accept: "application/json",
-              Authorization: "Bearer " + token
-          };
+        let headers = {
+          Accept: "application/json",
+          Authorization: "Bearer " + context.token
+        };
 
-          let data = {
-              post: post.id,
-              user: id
-          }
+        let data = {
+          post: post.id,
+          user: context.id
+        }
 
-          axiosHelper('post', '/like/add', data, headers, getRes);   
+        axiosHelper('post', '/like/add', data, headers, setResponse);
 
-      }            
+      }
 
-  } //else {
-  //     setRedirectToLogin(true);
-  //     console.log('redirect to login');
-  // }
-};
+    } 
+  }  
 
-const getRes = (res) => {
-
-  if (res !== {}) {
-
-      console.log(res);
-      setResponse(res);
-
-  } else {
-
-      console.log('Error, no data returned!');
-
-  }
-}
-
-function formatTime(timeStamp) {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  if (timeStamp) {
+  function formatTime(timeStamp) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    if (timeStamp) {
       let array = timeStamp.split("-");
 
       return months[parseInt(array[1]) - 1] + " " + array[2].substring(0, 2) + " " + array[0];
 
-  } else {
+    } else {
       return "";
+    }
   }
-}
 
-const lookAtUser = (user) => {
-  console.log(user);
+  const lookAtUser = (user) => {
+    console.log(user);
 
-  // return <Redirect to="/viewpost"></Redirect>
-}
+    // return <Redirect to="/viewpost"></Redirect>
+  }
 
 
   const context = {
@@ -182,7 +176,18 @@ const lookAtUser = (user) => {
     formatTime,
     response,
     setResponse,
-    lookAtUser
+    lookAtUser,
+    myNumberOfPosts,
+    myNumberOfLikes,
+    myNumberOfComments,
+    name,
+    setName,
+    email,
+    setEmail,
+    id,
+    setId,
+    bio,
+    setBio
   };
 
   return (
@@ -214,6 +219,9 @@ const lookAtUser = (user) => {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/editbio">
+              <Editbio />
             </Route>
           </Switch>
 

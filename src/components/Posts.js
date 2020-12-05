@@ -10,14 +10,14 @@ import Spacer from '../components/Spacer';
 
 export default function Posts() {
     const context = useContext(AppContext);
-
-    const [postsOrder, setPostsOrder] = useState('');
+    
+    const [postsOrder, setPostsOrder] = useState('newest');
     const [rawPosts, setRawPosts] = useState([]);
-    const [displayPosts, setDisplayPosts] = useState(["loading"]);
-
+    const [displayPosts, setDisplayPosts] = useState(["Loading"]);
+    
     useEffect(() => axiosHelper('get', '/posts/all', {}, {}, setRawPosts), [context.response]);
     useEffect(() => {
-        let posts = [...rawPosts];
+        let posts = [...rawPosts];  
 
         if (posts.length > 0) {
 
@@ -34,7 +34,6 @@ export default function Posts() {
 
             let temp = [];
 
-
             for (let i = (posts.length - 1); i >= 0; i--) {
                 let likeOrLikes = "like";
                 let commentOrComments = "comment";
@@ -44,13 +43,12 @@ export default function Posts() {
                 // posts[i].ref_parent_post ? replyOrNewPost = "Reply" : replyOrNewPost = "New Post";
                 // let time = context.formatTime(posts[i].created_at);
                 let usersThatLike = [];
-                let id = parseInt(localStorage.getItem("id"));
                 let liker = "";
 
                 for (let k = 0; k < posts[i].likes.length; k++) {
                     usersThatLike.push(posts[i].likes[k].user_id);
                 }
-                if (usersThatLike.includes(id)) {
+                if (usersThatLike.includes(context.id)) {
                     liker = "/w you";
                 }
 

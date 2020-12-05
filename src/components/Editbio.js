@@ -8,27 +8,23 @@ import Spacer from '../components/Spacer';
 import Backfooter from '../components/Backfooter';
 
 
-function Newpost() {
+function Editbio() {
     const [posted, setPosted] = useState(false);
     const context = useContext(AppContext);
-    
-    const [post, setPost] = useState('');
-    const [author, setAuthor] = useState('');
 
-    const onPostChange = (e) => {
-        setPost(e.target.value);
-    };
-    const onAuthorChange = (e) => {
-        setAuthor(e.target.value);
-    };
+    // const [bio, setBio] = useState('');
+
+    const onBioChange = (e) => {
+        context.setBio(e.target.value);
+    };    
 
     const callPost = () => {
 
+        // context.setBio(bio);
+
         let postBody = {
-            post: post,
-            author: author,
-            id: context.id,
-            parent: null
+            bio: context.bio,            
+            id: context.id,            
         };
 
         // console.log(postBody);
@@ -38,7 +34,7 @@ function Newpost() {
             Authorization: "Bearer " + context.token
         };
 
-        axiosHelper('post', '/newpost', postBody, headers, getRes);
+        axiosHelper('post', '/user/editbio', postBody, headers, getRes);
 
         setPosted(true);
 
@@ -57,28 +53,21 @@ function Newpost() {
         }
     }
 
-
-
     return (
         <Container className="postsbg">
             {!context.token ? <Redirect to="/" /> : null}
             <Header />
             <Row >
                 <Col className="text-center">
-                    <div>Input Quote: </div>
-                    <textarea rows="5" cols="30" type="text" value={post} onChange={onPostChange} />
+                    <div>Input New Bio: </div>
+                    <textarea rows="5" cols="30" type="text" value={context.bio} onChange={onBioChange} />
                 </Col>
             </Row>
-            <Row>
-                <Col className="text-center">
-                    <div>Author (optional): </div>
-                    <textarea rows="1" cols="20" type="text" value={author} onChange={onAuthorChange} /><br></br>
-                </Col>
-            </Row>
+            
             {posted ?
                 <Row>
                     <Col className="text-center">
-                        <Link to="/posts">Successfully posted!<br></br>Click to continue</Link>
+                        <Link to="/profile">Successfully posted!<br></br>Click to continue</Link>
                     </Col>
                 </Row>
                 :
@@ -89,10 +78,10 @@ function Newpost() {
                     </Col>
                 </Row>
             }
-            <Backfooter link="/posts"/>
+            <Backfooter link="/profile"/>
             <Spacer spaces="16" />
         </Container>
     )
 }
 
-export default Newpost
+export default Editbio

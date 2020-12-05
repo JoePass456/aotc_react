@@ -10,15 +10,16 @@ h1 {
 }
 
 .name {
-  /* border: solid 2px black; */
+  border: solid 2px gray;
   /* border-radius: 5px; */
   font-family: 'Orbitron', sans-serif;
   background-color: rgba(155, 181, 237, 0.954);
   margin: 20px;
+  padding: 5px;
 }
 
 .bio {
-  /* border: solid 2px black; */
+  border: solid 2px gray;
   font-family: 'Orbitron', sans-serif;
   background-color: rgba(155, 181, 237, 0.954);
   padding: 8px;
@@ -40,6 +41,8 @@ h1 {
   background-color: #dcd7c7;
   /* border-radius: 3px; */
   font-family: 'Orbitron', sans-serif;
+  padding-top: 5px;
+  margin-bottom: 5px;
 }
 
 /* .postfield {
@@ -54,6 +57,7 @@ h1 {
 
 .quotes {
   font-family: sans-serif;
+  margin-bottom: 5px;
 }
 
 .postsbg {
@@ -70,4 +74,8 @@ h1 {
   margin-bottom: 3;
   margin-left: 2;
   margin-right: 2;
+}
+
+.orb {
+  font-family: 'Orbitron', sans-serif;
 }

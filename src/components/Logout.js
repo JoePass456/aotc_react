@@ -26,7 +26,7 @@ function Logout() {
                     <p>(Create an account to post, like, and more!)</p>
                 </Col>
             </Row>
-            <Spacer spaces="15"/>
+            <Spacer spaces="18"/>
         </Container>
     )
 }

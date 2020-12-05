@@ -90,7 +90,7 @@ function Register() {
                             <Link to="/">Go back</Link>
                         </Col>
                     </Row>
-                    <Spacer spaces="12"/>
+                    <Spacer spaces="14"/>
                 </>
             }
         </Container>

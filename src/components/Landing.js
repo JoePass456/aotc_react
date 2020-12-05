@@ -8,19 +8,17 @@ import Header from '../components/Header';
 import Spacer from '../components/Spacer';
 
 function Landing() {
-    const context = useContext(AppContext);
-    
-    const [name, setName] = useState("Loading");
+    const context = useContext(AppContext);   
 
-    const getUser = (res) => {
+    const getUser = (res) => {        
         
-        localStorage.setItem("name", res.name);
-        localStorage.setItem("id", res.id);
-        localStorage.setItem("email", res.email);
-        localStorage.setItem("bio", res.bio);
+        context.setId(res.id);
+        context.setEmail(res.email);
+        context.setName(res.name);
+        console.log(res);
+        console.log(context.id);
+        if (res.bio) {context.setBio(res.bio)};       
         
-        setName(res.name)
-
     };
     useEffect(() => {
 
@@ -36,7 +34,6 @@ function Landing() {
         }
 
     }, [context.token])
-
     
     return (
         <Container className="postsbg">
@@ -46,8 +43,10 @@ function Landing() {
 
                     {context.loggedIn ?
                         <>
-                            <h4>Welcome, {name}!</h4>
+                            <h4>Welcome, {context.name}!</h4>
+                            <Spacer spaces="0"/>
                             <Link to="/logout">That's not me</Link><br></br>
+                            <Spacer spaces="0"/>
                             <Link to="/posts">Go to site</Link>
                         </>
                         :
@@ -62,7 +61,7 @@ function Landing() {
 
                 </Col>
             </Row>
-            <Spacer spaces="18" />
+            <Spacer spaces="21" />
         </Container>
     )
 }
