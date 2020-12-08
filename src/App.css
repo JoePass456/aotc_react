@@ -1,5 +1,5 @@
-li {
-  border: solid 2px black;
+.li {
+  border: solid 2px grey;
 }
 
 h1 {
@@ -78,4 +78,8 @@ h1 {
 
 .orb {
   font-family: 'Orbitron', sans-serif;
+}
+
+.clip {
+  overflow: auto;
 }

@@ -8,13 +8,16 @@ import Spacer from '../components/Spacer';
 import Backfooter from '../components/Backfooter';
 
 
-function Newpost() {
-    const [posted, setPosted] = useState(false);
+function Editpost() {
+    const [posted, setPosted] = useState('');
     const context = useContext(AppContext);
-    
-    const [post, setPost] = useState('');
-    const [author, setAuthor] = useState('');
-    const [tag, setTag] = useState('');
+
+    const [post, setPost] = useState(context.targetPost.post);
+    const [author, setAuthor] = useState(context.targetPost.author);
+    const [tag, setTag] = useState(context.targetPost.tag);
+
+
+    context.setEditSwitch(0);
 
     const onPostChange = (e) => {
         setPost(e.target.value);
@@ -26,15 +29,15 @@ function Newpost() {
         setTag(e.target.value);
     }
 
-    const callPost = () => {
+    const callEditPost = () => {
 
         let postBody = {
             post: post,
             author: author,
-            id: context.id,
+            id: context.targetPost.id,
             tag: tag
         };
-
+        console.log(postBody);
         // console.log(postBody);
 
         let headers = {
@@ -42,9 +45,27 @@ function Newpost() {
             Authorization: "Bearer " + context.token
         };
 
-        axiosHelper('post', '/newpost', postBody, headers, getRes);
+        axiosHelper('post', '/editpost', postBody, headers, getRes);
 
-        setPosted(true);
+        setPosted("Post successfully updated!");
+
+    }
+    const callDelPost = () => {
+
+        let postBody = {            
+            id: context.targetPost.id            
+        };
+        console.log("DELETE");
+        // console.log(postBody);
+
+        let headers = {
+            Accept: "application/json",
+            Authorization: "Bearer " + context.token
+        };
+
+        axiosHelper('post', '/delpost', postBody, headers, getRes);
+
+        setPosted("Post was successfully deleted!");
 
     }
 
@@ -88,21 +109,29 @@ function Newpost() {
             {posted ?
                 <Row>
                     <Col className="text-center">
-                        <Link to="/posts">Successfully posted!<br></br>Click to continue</Link>
+                        <Link to="/profile"><h4>{posted}</h4><br></br>Click to continue</Link>
                     </Col>
                 </Row>
                 :
-                <Row>
-                    <Col className="text-center">
-                        <Button className="m-2" onClick={callPost}>Submit</Button><br></br>
-                        {/* <Link to="/posts">Or click to go back</Link> */}
-                    </Col>
-                </Row>
+                <>
+                    <Row>
+                        <Col className="text-center">
+                            <Button className="m-2" onClick={callEditPost}>Submit Edit</Button><br></br>
+                            {/* <Link to="/posts">Or click to go back</Link> */}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="text-center">
+                            <Button className="m-2" onClick={callDelPost}>Delete Post Forever</Button><br></br>
+                            {/* <Link to="/posts">Or click to go back</Link> */}
+                        </Col>
+                    </Row>
+                </>
             }
-            <Backfooter link="/posts"/>
+            <Backfooter link="/profile" />
             <Spacer spaces="16" />
         </Container>
     )
 }
 
-export default Newpost
+export default Editpost

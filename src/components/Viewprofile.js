@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Col, Row, Container, Button } from 'reactstrap';
+import { Col, Row, Container } from 'reactstrap';
 import { Redirect, Link } from 'react-router-dom';
 import { axiosHelper } from '../utilities/axiosHelper';
 import AppContext from '../utilities/AppContext';
 import Spacer from '../components/Spacer';
 import Backfooter from '../components/Backfooter';
 
-function Profile() {
+function Viewprofile() {
     const context = useContext(AppContext);
 
     const [profileOrder, setProfileOrder] = useState('newest');
@@ -16,13 +16,15 @@ function Profile() {
     useEffect(() => axiosHelper('get', '/posts/all', {}, {}, setProfilePosts), [context.response, context.bio]);
     useEffect(() => {
 
+        context.setProfileSwitch(0);
+
         context.myNumberOfPosts = 0;
         context.myNumberOfLikes = 0;
         context.myNumberOfComments = 0;
         
 
         let posts = [...profilePosts];
-        console.log(posts);
+        // console.log(posts);
 
         if (posts.length > 0) {
             console.log(posts);
@@ -68,7 +70,7 @@ function Profile() {
                 likeOrLikes = context.pluralOrNot(posts[i].likes.length, likeOrLikes);
                 commentOrComments = context.pluralOrNot(numberOfComments, commentOrComments);
 
-                if (context.id == posts[i].user.id) {
+                if (context.targetUser.id == posts[i].user.id) {
                     context.myNumberOfPosts++;
                     context.myNumberOfLikes += posts[i].likes.length;
                     context.myNumberOfComments += numberOfComments;
@@ -100,9 +102,9 @@ function Profile() {
                                 <Col className="clip" onClick={() => context.toggleLike(posts[i])} xs="3">
                                     <p className="smallfont">{posts[i].likes.length} {likeOrLikes} {liker}</p>
                                 </Col>
-                                <Col className="" onClick={() => context.editPost(posts[i])} xs="6">
+                                <Col className="clip" onClick={() => context.lookAtUser(posts[i].user)} xs="6">
                                     {/* <p className="smallfont">{time.substring(0, 6)}<br></br>{time.substring(6, 11)}</p> */}
-                                    <h6 className="">[EDIT]</h6>
+                                    <p className="smallfont">Posted by<br></br>{posts[i].user.name}</p>
                                 </Col>
                                 <Col className="clip" xs="3">
                                     <p className="smallfont">{posts[i].tag}</p>
@@ -111,7 +113,7 @@ function Profile() {
                         </div>
                     )
                 } else {
-                    console.log('nope', context.id);
+                    // console.log('nope', context.id);
                 }
             }
             setDisplayProfile(temp);
@@ -120,18 +122,17 @@ function Profile() {
 
     return (
         <>
-            {!context.token ? <Redirect to="/" /> : null}
-            {context.editSwitch? <Redirect to="/editpost" /> : null}
+            
             <Container className="postsbg">
                 <Row>
                     <Col className="text-center col-12">
-                        <h4 className="name">{context.name}</h4>
+                        <h4 className="name">{context.targetUser.name}</h4>
                     </Col>
                 </Row>
                 <Row>
                     <Col className="text-center col-12">
-                        <p className="bio">{context.bio}
-                            <Link to="/editbio">(edit)</Link></p>
+                        <p className="bio">{context.targetUser.bio}</p>
+                            
                     </Col>
                 </Row>
                 <Row>
@@ -186,4 +187,4 @@ function Profile() {
 }
 
 
-export default Profile
+export default Viewprofile

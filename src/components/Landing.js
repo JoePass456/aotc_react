@@ -15,8 +15,8 @@ function Landing() {
         context.setId(res.id);
         context.setEmail(res.email);
         context.setName(res.name);
-        console.log(res);
-        console.log(context.id);
+        // console.log(res);
+        // console.log(context.id);
         if (res.bio) {context.setBio(res.bio)};       
         
     };
@@ -47,7 +47,7 @@ function Landing() {
                             <Spacer spaces="0"/>
                             <Link to="/logout">That's not me</Link><br></br>
                             <Spacer spaces="0"/>
-                            <Link to="/posts">Go to site</Link>
+                            <Link to="/posts">That's me, Go to site!</Link>
                         </>
                         :
                         <>
@@ -56,6 +56,7 @@ function Landing() {
                             <Link to="/register">Create new account</Link><br></br>
                             <Link to="/posts">Go to site without logging in</Link><br></br>
                             <p>(Create an account to post, like, and more!)</p>
+
 
                         </>}
 

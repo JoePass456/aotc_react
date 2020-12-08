@@ -11,6 +11,7 @@ function Logout() {
     useEffect(()=> {
         localStorage.clear();
         context.setToken("");
+        context.setName("");
         context.setLoggedIn(false);
     },[])
 

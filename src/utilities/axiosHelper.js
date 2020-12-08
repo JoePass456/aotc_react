@@ -11,6 +11,7 @@ export function axiosHelper(
     // failureFunction = error => console.log(error)
 ) {
     const baseUrl = 'http://localhost:8000';
+    // const baseUrl = 'https://quoter-297915.ue.r.appspot.com';
     return axios({
         method,
         url: baseUrl + ext,

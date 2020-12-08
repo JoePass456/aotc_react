@@ -11,7 +11,7 @@ function Footer() {
                 <Link to="/profile" className="">Profile</Link>
             </Col>
             <Col xs="4" className="headButtons">
-                <p className="">Options</p>
+                <Link to="/options" className="">Options</Link>
             </Col>
             <Col xs="4" className="headButtons">
                 <Link to="/newpost" className="">New</Link>

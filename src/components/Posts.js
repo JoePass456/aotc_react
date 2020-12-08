@@ -4,23 +4,25 @@ import { Col, Row, Container } from 'reactstrap';
 // import { Redirect } from 'react-router-dom';
 import AppContext from '../utilities/AppContext';
 import { axiosHelper } from '../utilities/axiosHelper';
+import { Redirect } from 'react-router-dom';
 import Headbar from '../components/Headbar';
 import Footer from '../components/Footer';
 import Spacer from '../components/Spacer';
 
 export default function Posts() {
     const context = useContext(AppContext);
-    
+
     const [postsOrder, setPostsOrder] = useState('newest');
     const [rawPosts, setRawPosts] = useState([]);
     const [displayPosts, setDisplayPosts] = useState(["Loading"]);
-    
+
+
     useEffect(() => axiosHelper('get', '/posts/all', {}, {}, setRawPosts), [context.response]);
     useEffect(() => {
-        let posts = [...rawPosts];  
+        let posts = [...rawPosts];
 
         if (posts.length > 0) {
-
+            // console.log('Data found', posts);
             // posts = rawPosts;
             if (postsOrder === "oldest") {
                 posts = context.reverseOrder(rawPosts);
@@ -68,27 +70,33 @@ export default function Posts() {
                             </Col>
                         </Row>
                         <Row className="text-center">
-                            <Col className="col-3" onClick={() => context.toggleLike(posts[i])}>
+                            <Col className="col-3 clip" onClick={() => context.toggleLike(posts[i])}>
                                 <p className="smallfont">{posts[i].likes.length} {likeOrLikes} {liker}</p>
                             </Col>
-                            <Col className="col-6" onClick={() => context.lookAtUser(posts[i].user)}>
+                            <Col className="col-6 clip" onClick={() => context.lookAtUser(posts[i].user)}>
                                 {/* <p className="smallfont">{time.substring(0, 6)}<br></br>{time.substring(6, 11)}</p> */}
+                                {/* {console.log(i)} */}
                                 <p className="smallfont">Posted by<br></br>{posts[i].user.name}</p>
                             </Col>
-                            <Col className="col-3">
-                                <p className="smallfont">{numberOfComments}<br></br>{commentOrComments}</p>
+                            <Col className="col-3 clip">
+                                <p className="smallfont" onClick={() => context.lookAtTag(posts[i].tag)}>{posts[i].tag}</p>
                             </Col>
                         </Row>
                     </div>
                 )
             }
             setDisplayPosts(temp);
+        } else {
+            // console.log("no data found");
         }
-    }, [postsOrder, rawPosts]);
+    }, [postsOrder, rawPosts, context.targetUser]);
 
     return (
-        <Container className="postsbg">
+        <Container className="postsbg">  
+            {console.log("Profileswitch:", context.profileSwitch)}
+            {context.profileSwitch? <Redirect to="/viewprofile" /> : null}
             <Headbar changePostsOrder={setPostsOrder} />
+
             <Spacer spaces="3" />
             <Container className="">
                 {displayPosts}

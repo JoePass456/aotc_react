@@ -12,6 +12,9 @@ import Logout from './components/Logout';
 import Profile from './components/Profile';
 import Viewpost from './components/Viewpost';
 import Editbio from './components/Editbio';
+import Options from './components/Options';
+import Viewprofile from './components/Viewprofile';
+import Editpost from './components/Editpost';
 
 
 
@@ -21,23 +24,53 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [response, setResponse] = useState({});
   const [name, setName] = useState("Loading");
-  const [bio, setBio] = useState("Mysterious stranger");
+  const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const [id, setId] = useState(0);
+  const [searchTag, setSearchTag] = useState("");
+  const [targetUser, setTargetUser] = useState({});
+  const [profileSwitch, setProfileSwitch] = useState(0);
+  const [editSwitch, setEditSwitch] = useState(0);
+  const [targetPost, setTargetPost] = useState({});
+  // const [rating, setRating] = useState(0);
+  // const [rank, setRank] = useState("");
 
   let myNumberOfPosts = 0;
   let myNumberOfLikes = 0;
   let myNumberOfComments = 0;
+  let rating = 0;
+  let rank = "";
 
   useEffect(() => {
 
     let lsToken = localStorage.getItem("token");
 
     if (lsToken) {
-      setToken(lsToken);
+      context.setToken(lsToken);
+      // console.log('logging in');
+
+      let headers = {
+        Accept: "application/json",
+        Authorization: "Bearer " + lsToken
+      };
+
+      axiosHelper('get', '/api/user', {}, headers, getUser);
+      
     }
 
   }, [])
+
+  const getUser = (res) => {
+
+    context.setId(res.id);
+    context.setEmail(res.email);
+    context.setName(res.name);
+    console.log(res);
+    console.log(context.id);
+    if (res.bio) { context.setBio(res.bio) };
+    // console.log('loaded data');
+
+  };
 
   function newestFirst(array) {
 
@@ -100,7 +133,7 @@ function App() {
 
     if (context.token) {
       let usersThatLike = [];
-      
+
       console.log(context.id);
 
       for (let i = 0; i < post.likes.length; i++) {
@@ -140,8 +173,8 @@ function App() {
 
       }
 
-    } 
-  }  
+    }
+  }
 
   function formatTime(timeStamp) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -156,14 +189,25 @@ function App() {
   }
 
   const lookAtUser = (user) => {
-    console.log(user);
+
+    context.setTargetUser(user);
+    context.setProfileSwitch(user.id);
+    // console.log(user.id);
 
     // return <Redirect to="/viewpost"></Redirect>
   }
 
+  const editPost = (post) => {
+
+    console.log("post:", post);
+    context.setEditSwitch("post id:", post.id);
+    context.setTargetPost(post);
+
+  }
+
 
   const context = {
-    secret: "79O8m2z2hQ7Di0K2JTQzeBZ265jnPtJHo5sPE0n5",
+    secret: "H6F1ehKoAAAsAQHMU1nmBPcHdSUf4F05H7eAl0Bu",
     loggedIn,
     setLoggedIn,
     token,
@@ -177,6 +221,7 @@ function App() {
     response,
     setResponse,
     lookAtUser,
+    editPost,
     myNumberOfPosts,
     myNumberOfLikes,
     myNumberOfComments,
@@ -187,7 +232,19 @@ function App() {
     id,
     setId,
     bio,
-    setBio
+    setBio,
+    rank,
+    rating,
+    searchTag,
+    setSearchTag,
+    targetUser,
+    setTargetUser,
+    profileSwitch,
+    setProfileSwitch,
+    editSwitch,
+    setEditSwitch,
+    setTargetPost,
+    targetPost
   };
 
   return (
@@ -222,6 +279,15 @@ function App() {
             </Route>
             <Route path="/editbio">
               <Editbio />
+            </Route>
+            <Route path="/options">
+              <Options />
+            </Route>
+            <Route path="/viewprofile">
+              <Viewprofile />
+            </Route>
+            <Route path="/editpost">
+              <Editpost />
             </Route>
           </Switch>
 
