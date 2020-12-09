@@ -44,11 +44,11 @@ function Editbio() {
 
         if (res !== {}) {
 
-            console.log(res);
+            // console.log(res);
 
         } else {
 
-            console.log('Error, no data returned!');
+            // console.log('Error, no data returned!');
 
         }
     }

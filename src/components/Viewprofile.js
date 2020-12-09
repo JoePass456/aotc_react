@@ -27,7 +27,7 @@ function Viewprofile() {
         // console.log(posts);
 
         if (posts.length > 0) {
-            console.log(posts);
+            // console.log(posts);
 
             posts = profilePosts;
             if (profileOrder === "oldest") {

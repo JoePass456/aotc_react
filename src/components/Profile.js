@@ -22,10 +22,10 @@ function Profile() {
         
 
         let posts = [...profilePosts];
-        console.log(posts);
+        // console.log(posts);
 
         if (posts.length > 0) {
-            console.log(posts);
+            // console.log(posts);
 
             posts = profilePosts;
             if (profileOrder === "oldest") {
@@ -111,7 +111,7 @@ function Profile() {
                         </div>
                     )
                 } else {
-                    console.log('nope', context.id);
+                    // console.log('nope', context.id);
                 }
             }
             setDisplayProfile(temp);

@@ -37,7 +37,7 @@ function Editpost() {
             id: context.targetPost.id,
             tag: tag
         };
-        console.log(postBody);
+        // console.log(postBody);
         // console.log(postBody);
 
         let headers = {
@@ -55,7 +55,7 @@ function Editpost() {
         let postBody = {            
             id: context.targetPost.id            
         };
-        console.log("DELETE");
+        // console.log("DELETE");
         // console.log(postBody);
 
         let headers = {
@@ -73,11 +73,11 @@ function Editpost() {
 
         if (res !== {}) {
 
-            console.log(res);
+            // console.log(res);
 
         } else {
 
-            console.log('Error, no data returned!');
+            // console.log('Error, no data returned!');
 
         }
     }

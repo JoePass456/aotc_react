@@ -65,8 +65,8 @@ function App() {
     context.setId(res.id);
     context.setEmail(res.email);
     context.setName(res.name);
-    console.log(res);
-    console.log(context.id);
+    // console.log(res);
+    // console.log(context.id);
     if (res.bio) { context.setBio(res.bio) };
     // console.log('loaded data');
 
@@ -134,14 +134,14 @@ function App() {
     if (context.token) {
       let usersThatLike = [];
 
-      console.log(context.id);
+      // console.log(context.id);
 
       for (let i = 0; i < post.likes.length; i++) {
         usersThatLike.push(post.likes[i].user_id);
       }
 
       if (usersThatLike.includes(context.id)) {
-        console.log("sub like");
+        // console.log("sub like");
 
         let likeId = parseInt(post.likes[usersThatLike.indexOf(context.id)].id);
 
@@ -157,7 +157,7 @@ function App() {
         axiosHelper('post', '/like/del', data, headers, setResponse);
 
       } else {
-        console.log("add like");
+        // console.log("add like");
 
         let headers = {
           Accept: "application/json",
@@ -199,7 +199,7 @@ function App() {
 
   const editPost = (post) => {
 
-    console.log("post:", post);
+    // console.log("post:", post);
     context.setEditSwitch("post id:", post.id);
     context.setTargetPost(post);
 
@@ -207,7 +207,7 @@ function App() {
 
 
   const context = {
-    secret: "H6F1ehKoAAAsAQHMU1nmBPcHdSUf4F05H7eAl0Bu",
+    secret: "tF5EW9bkleKy8lJI8yf96rJOSy9ysyweYKP6iQFu",
     loggedIn,
     setLoggedIn,
     token,

@@ -33,14 +33,14 @@ function Register() {
 
     const signUp = (res) => {
         
-        console.log(res);
+        // console.log(res);
         if (res.status) {
 
             localStorage.setItem("token", res.data.token);
             context.setToken(res.data.token);
 
         } else {
-            console.log('Error, no data returned!');
+            // console.log('Error, no data returned!');
         }
     }
 

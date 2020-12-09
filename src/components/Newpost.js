@@ -52,7 +52,7 @@ function Newpost() {
 
         if (res !== {}) {
 
-            console.log(res);
+            // console.log(res);
 
         } else {
 

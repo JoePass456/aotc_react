@@ -32,13 +32,18 @@ function Login() {
             scope: ""
         }
 
-        axiosHelper('post', '/v1/oauth/token', logInInfo, {}, getLogIn);
+        let headers = {
+            Accept: "application/json",
+            Authorization: "Bearer " + context.token
+        };
+
+        axiosHelper('post', '/v1/oauth/token', logInInfo, headers, getLogIn);
 
     }
 
     const getLogIn = (res) => {
 
-        console.log(res);
+        // console.log(res);
 
         if (res.token_type == "Bearer") {
 
@@ -47,7 +52,7 @@ function Login() {
             
         } else {
 
-            console.log('Error, no data returned!');
+            // console.log('Error, no data returned!');
 
         }
     }

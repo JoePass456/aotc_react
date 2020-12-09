@@ -93,7 +93,7 @@ export default function Posts() {
 
     return (
         <Container className="postsbg">  
-            {console.log("Profileswitch:", context.profileSwitch)}
+            {/* {console.log("Profileswitch:", context.profileSwitch)} */}
             {context.profileSwitch? <Redirect to="/viewprofile" /> : null}
             <Headbar changePostsOrder={setPostsOrder} />
 
